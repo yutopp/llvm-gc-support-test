@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+cur=`pwd`
+
+if [ ! -e _bin ]; then
+    mkdir _bin
+fi
+cd _bin
+
+clang++ -std=c++11 ../../oreore_runtime.cpp -c -o oreore_runtime.o
+
+llc ../test_function.ll -filetype=obj -o test_function.o
+clang++ ../../entry.cpp -c -o entry.o
+
+clang++ entry.o test_function.o oreore_runtime.o
+
+cd $cur
+cp ./_bin/a.out .
